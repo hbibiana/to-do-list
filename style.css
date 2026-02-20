@@ -1,0 +1,90 @@
+body {
+    background: url(img/background.jpg) no-repeat center center;
+    background-size: cover;
+    min-height: 100vh;
+    text-align: center;
+    font-family: "Playfair Display", serif;
+}
+
+h1 {
+    font-size: 60px;
+    color:white;
+
+}
+
+form {
+    padding-bottom: 20px;
+}
+
+input {
+    padding:10px;
+    font-family: "Playfair Display", serif;
+}
+
+.add {
+    background-color:rgba(36, 30, 19, 0.718);
+    border-color: rgba(36, 30, 19, 0.718); 
+    color:white;
+}
+
+button {
+    padding:10px;
+    background-color:rgba(161, 130, 98, 0.781);
+    border-color: rgba(161, 130, 98, 0.781);
+    color:white;
+    border-radius: 3px;
+    font-family: "Playfair Display", serif;
+}
+
+li button {
+     font-family: "Playfair Display", serif;
+    padding: 2px 3px;
+    background-color:rgba(36, 30, 19, 0.718);
+    border-color: rgba(36, 30, 19, 0.718);
+    color:white;
+    border-radius: 5px;
+    cursor: pointer;  
+}
+
+
+.todolist {
+    margin-top: 80px;
+    width:100%;
+    height:90vh;
+    background:rgba(192, 190, 190, 0.600);
+    border-radius: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.4s;
+    transform: translateY(20px);
+}
+
+input[type="checkbox"] {
+    accent-color:rgba(57, 43, 24, 0.937);
+    width: 20px;
+    height: 20px;
+    cursor:pointer;
+}
+
+.todolist.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+  padding: 5px;
+}
+
+li.done label {
+  text-decoration: line-through;
+  color: black;
+}
+
+li.todo label {
+  color: black;
+}
+
