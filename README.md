@@ -6,7 +6,7 @@ Jednoduchá TO DO aplikácia, ktorú som spravila na precvičenie DOM, eventov a
 - označenie úloh ako dokončených (checkboxy)
 - filtrovanie úloh - všetky/dokončené/nedokončené
 - vymazanie úloh
-- počítadlo hotových úloh
+- počítadlo dokončených úloh
 
 ## Demo 
 - GitHub Pages: https://hbibiana.github.io/to-do-list/
