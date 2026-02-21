@@ -22,7 +22,7 @@ function getTasksToRender() {
 
 function updateCounter() {
   const doneCount = tasks.filter(t => t.done).length;
-  counter.textContent = `Hotové úlohy: ${doneCount} / ${tasks.length}`;
+  counter.textContent = `Dokončené úlohy: ${doneCount} / ${tasks.length}`;
 }
 
 
