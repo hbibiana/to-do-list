@@ -5,7 +5,7 @@ Jednoduchá TO DO aplikácia, ktorú som spravila na precvičenie DOM, eventov a
 - pridanie úloh cez formulár
 - označenie úloh ako dokončených (checkboxy)
 - filtrovanie úloh - všetky/dokončené/nedokončené
-- vymazanie úlohy
+- vymazanie úloh
 - počítadlo hotových úloh
 
 ## Demo 
