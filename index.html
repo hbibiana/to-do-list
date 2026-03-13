@@ -2,36 +2,36 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale= 1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Betania+Patmos&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+CZ:wght@100..400&display=swap" rel="stylesheet">
-        <title>To do list</title>
+        <title>TO-DO list</title>
     </head>
 
     <body>
+        <header>
+            <button class="lang" type="button" id="lang-en">EN</button>
+            <button class="lang" type="button" id="lang-sk">SK</button>
+        </header>
        
         <h1>TO DO list</h1>
 
         <form id="task-form">
-            <input id="task-input" placeholder= "Nová úloha">
-            <button type="submit" class="add">Pridať novú úlohu</button>
-            
+            <input id="task-input" type="text" placeholder= "Type a task..." data-i18n-placeholder="namePlaceholder">
+            <button type="submit" class="add" data-i18n="addTask">Add task</button>
         </form>
 
-        <div>
-            <button id="all">Zoznam všetkých úloh</button>
-            <button id="done">Dokončené úlohy</button>
-            <button id="todo">Nedokončené úlohy</button>
+        <div class="filters">
+            <button id="all" data-i18n="filterAll">All tasks</button>
+            <button id="done" data-i18n="filterDone">Completed tasks</button>
+            <button id="todo" data-i18n="filterTodo">Unfinished tasks</button>
         </div>
         
         <div class="todolist">
-            
             <p id="counter"></p>
-  
             <ul id="task-list"></ul>
-            
         </div>
 
         <script src="script.js"></script>
