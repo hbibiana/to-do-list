@@ -60,7 +60,7 @@ function setLanguage(lang) {
 document.getElementById("lang-sk").addEventListener("click", () => setLanguage("sk"));
 document.getElementById("lang-en").addEventListener("click", () => setLanguage("en"));
 
-const savedLang = localStorage.getItem("lang") || "sk";
+const savedLang = localStorage.getItem("lang") || "en";
 setLanguage(savedLang);
 
 
