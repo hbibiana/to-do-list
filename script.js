@@ -174,6 +174,7 @@ taskForm.addEventListener("submit", (e) => {
   addTask(value);
   taskForm.reset();
 });
+
 taskList.addEventListener("click", (event) => {
   const item = event.target.closest("li");
   if (!item) return;
