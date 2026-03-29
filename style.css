@@ -7,10 +7,21 @@ body {
     font-family: "Playfair Display", serif;
 }
 
+/*----------HEADER----------*/
+header {
+    text-align: right;
+}
+
+.lang {
+    background-color:rgba(255, 255, 255, 0.616);
+    color:rgba(57, 43, 24, 0.937);
+}
+
+/*----------MAIN----------*/
+
 h1 {
     font-size: 60px;
     color:white;
-
 }
 
 form {
@@ -24,22 +35,16 @@ input {
     border: 1px solid rgba(36, 30, 19, 0.3);
 }
 
+input:focus {
+    outline: 2px solid rgba(57, 43, 24, 0.5);
+    outline-offset: 2px;
+}
+
 .add {
     background-color:rgba(36, 30, 19, 0.718);
     border-color: rgba(36, 30, 19, 0.718); 
     color:white;
 }
-
-header {
-    text-align: right;
-}
-
-.lang {
-    background-color:rgba(255, 255, 255, 0.616);
-    color:rgba(57, 43, 24, 0.937);
-   
-}
-
 
 button {
     padding:10px;
@@ -51,6 +56,11 @@ button {
     cursor: pointer; 
 }
 
+button:hover {
+    opacity: 0.85;
+    transition: opacity 0.2s;
+}
+
 li button {
     font-family: "Playfair Display", serif;
     padding: 2px 3px;
@@ -60,6 +70,27 @@ li button {
     border-radius: 5px; 
 }
 
+li {
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+  padding: 13px;
+}
+
+li:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+li.done .task-text {
+  text-decoration: line-through;
+  color: black;
+}
+
+li.todo .task-text {
+  color: black;
+}
 
 .todolist {
     padding-top: 5px;
@@ -74,6 +105,16 @@ li button {
     transform: translateY(20px);
 }
 
+.todolist.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+ul {
+    padding: 0 40px;
+}
+
 input[type="checkbox"] {
     accent-color:rgba(57, 43, 24, 0.937);
     width: 20px;
@@ -81,25 +122,29 @@ input[type="checkbox"] {
     cursor:pointer;
 }
 
-.todolist.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+
+/*--------MEDIA QUERIES-------*/
+@media (max-width: 600px) {
+    h1 {
+        font-size: 40px;
+    }
+
+    input {
+        width: 70%;
+    }
+
+    .filters {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
 }
 
-li {
-  display: flex;
-  align-items: center;
-  gap: 8px; 
-  padding: 13px;
-}
+@media (max-width: 350px) {
+     input {
+        width: 70%;
+        margin-bottom: 10px;
+    }
 
-li.done .task-text {
-  text-decoration: line-through;
-  color: black;
 }
-
-li.todo .task-text {
-  color: black;
-}
-
