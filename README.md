@@ -4,13 +4,13 @@
 
 ## English
 
-### About the Project
+### About the project
 A simple To-Do app I created to practice working with the DOM, events, and rendering data from an array of objects. The app is available in two languages - English and Slovak.
 
-## Live Demo
+## Live demo
 - GitHub Pages: https://hbibiana.github.io/to-do-list/
 
-### Built With
+## Built with
 - HTML5
 - CSS3
 - JavaScript (Vanilla)
