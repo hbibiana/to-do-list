@@ -1,7 +1,7 @@
 /*INITIAL STATE*/
 let tasks = [
-  { id: 1, text: "Spraviť nákup", done: false },
-  { id: 2, text: "Prejsť sa", done: true }
+  { id: 1, text: "Go for a walk", done: false },
+  { id: 2, text: "Buy groceries", done: true }
 ];
 
 let currentFilter = "all";
