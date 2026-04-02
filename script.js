@@ -24,19 +24,19 @@ const taskInput = document.getElementById("task-input");
 const translations = {
   sk: {
     namePlaceholder: "Napíš úlohu...",
-    addTask: "Pridať novú úlohu",
-    filterAll: "Zoznam všetkých úloh",
-    filterDone: "Dokončené úlohy",
-    filterTodo: "Nedokončené úlohy",
-    taskCounter: "Dokončené úlohy: {doneCount} / {total}"
+    addTask: "Pridať úlohu",
+    filterAll: "Všetky",
+    filterDone: "Hotové",
+    filterTodo: "Čakajúce",
+    taskCounter: "Hotové úlohy: {doneCount} / {total}"
   },
 
   en: {
     namePlaceholder: "Type a task...",
     addTask: "Add task",
-    filterAll: "All tasks",
-    filterDone: "Completed tasks",
-    filterTodo: "Unfinished tasks",
+    filterAll: "All",
+    filterDone: "Done",
+    filterTodo: "To do",
     taskCounter: "Completed tasks: {doneCount} / {total}"
   }
 };
@@ -55,6 +55,15 @@ function setLanguage(lang) {
   currentLang = lang;
   updateCounter();
   localStorage.setItem("lang", lang);
+
+  if (lang === 'sk') {
+    taskInput.setCustomValidity(""); 
+    taskInput.oninvalid = () => taskInput.setCustomValidity("Prosím, vyplňte túto úlohu.");
+  } else {
+    taskInput.setCustomValidity(""); 
+    taskInput.oninvalid = () => taskInput.setCustomValidity("Please fill out this field.");
+  }
+    taskInput.oninput = () => taskInput.setCustomValidity("");
 }
 
 document.getElementById("lang-sk").addEventListener("click", () => setLanguage("sk"));
@@ -63,6 +72,48 @@ document.getElementById("lang-en").addEventListener("click", () => setLanguage("
 const savedLang = localStorage.getItem("lang") || "en";
 setLanguage(savedLang);
 
+
+/*FETCH API FONTS */
+async function initFontSelector() {
+  const fontSelect = document.getElementById("font-select");
+  if (!fontSelect) return;
+
+  try {
+    const response = await fetch('./fonts.json');
+    if (!response.ok) throw new Error("Chyba pri načítaní JSON súboru");
+    
+    const fonts = await response.json();
+
+    fontSelect.innerHTML = "";
+    fonts.forEach(font => {
+      const option = document.createElement("option");
+      option.value = font.family;
+      option.textContent = font.name;
+      fontSelect.appendChild(option);
+    });
+
+    const savedFont = localStorage.getItem("selectedFont");
+    if (savedFont) {
+    
+      document.body.style.fontFamily = savedFont;
+      fontSelect.value = savedFont;
+    }
+
+  
+    fontSelect.addEventListener("change", () => {
+      const selectedFont = fontSelect.value;
+      
+      document.body.style.fontFamily = selectedFont;
+    
+      localStorage.setItem("selectedFont", selectedFont);
+    });
+
+  } catch (error) {
+    console.error("Nepodarilo sa načítať fonty:", error);
+  }
+}
+
+initFontSelector();
 
 /*HELPER FUNCTIONS*/ 
 function saveTasks() {
@@ -150,18 +201,46 @@ function render() {
     taskText.textContent = task.text;
     taskText.classList.add("task-text");
 
+    const editButton = document.createElement("button");
+    editButton.type="button";
+    editButton.innerHTML='<i class="fa-solid fa-pen-to-square"></i>';
+    editButton.classList.add("edit-btn");
+    editButton.setAttribute("aria-label", "Edit task");
+
     const deleteButton = document.createElement("button");
     deleteButton.type = "button";
-    deleteButton.textContent = "x";
+    deleteButton.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
     deleteButton.classList.add("delete-btn");
+    deleteButton.setAttribute("aria-label", "Delete task");
 
     taskItem.appendChild(taskCheckbox);
     taskItem.appendChild(taskText);
+    taskItem.appendChild(editButton);
     taskItem.appendChild(deleteButton);
     taskList.appendChild(taskItem);
   });
 
   updateCounter();
+
+  const filtersNav = document.querySelector(".filters");
+  if (tasks.length > 0) {
+    todoListContainer.classList.add("show");
+    filtersNav.classList.add("show");
+  
+  document.querySelectorAll(".filterBtn").forEach(btn => 
+    btn.classList.remove("active"));
+
+  const currentBtn = document.getElementById(currentFilter);
+  if (currentBtn) currentBtn.classList.add("active");
+
+  } else {
+    todoListContainer.classList.remove("show");
+    filtersNav.classList.remove("show");
+
+  document.querySelectorAll(".filterBtn").forEach(btn => {
+      btn.classList.remove("active");
+    });
+  }
 }
 
 /*EVENT LISTENERS*/
@@ -173,19 +252,6 @@ taskForm.addEventListener("submit", (e) => {
 
   addTask(value);
   taskForm.reset();
-});
-
-taskList.addEventListener("click", (event) => {
-  const item = event.target.closest("li");
-  if (!item) return;
-
-  const id = Number(item.dataset.id);
-  if (!id) return;
-
-  if (event.target.closest(".delete-btn")) {
-    deleteTask(id);
-    return;
-  }
 });
 
 taskList.addEventListener("change", (event) => {
@@ -201,45 +267,68 @@ taskList.addEventListener("change", (event) => {
   setTaskDone(id, taskCheckbox.checked);
 });
 
-taskList.addEventListener("dblclick", (event) => {
-  const taskText = event.target.closest(".task-text");
-  if (!taskText) return;
 
-  const taskItem = taskText.closest("li");
-  if (!taskItem) return;
+taskList.addEventListener("click", (event) => {
+  if (event.target.classList.contains("edit-input")) return;
+  const item = event.target.closest("li");
+  if (!item) return;
 
-  const id = Number(taskItem.dataset.id);
+  const id = Number(item.dataset.id);
   if (!id) return;
 
-  const task = tasks.find((t) => t.id === id);
-  if (!task) return;
+  if (event.target.closest(".delete-btn")) {
+    deleteTask(id);
+    return;
+  }
 
-  const editInput = document.createElement("input");
-  editInput.type = "text";
-  editInput.value = task.text;
-  editInput.classList.add("edit-input");
+  if (event.target.closest(".edit-btn")) {
+    const taskText = item.querySelector(".task-text");
+    const task = tasks.find((t) => t.id === id);
+    if (!task || !taskText) return;
 
-  taskText.replaceWith(editInput);
-  editInput.focus();
-  editInput.select();
+    const editInput = document.createElement("input");
+    editInput.type = "text";
+    editInput.name="text";
+    editInput.value = task.text;
+    editInput.classList.add("edit-input");
+    
+    editInput.addEventListener("click", (e) => {
+        e.stopPropagation();
+    });
 
-  const saveEdit = () => {
-    const newText = editInput.value.trim();
+    taskText.replaceWith(editInput);
+    editInput.focus();
+    editInput.select();
 
-    if (newText === "") {
-      render();
-      return;
-    }
-
-    editTask(id, newText);
-  };
+    const saveEdit = () => {
+      const newText = editInput.value.trim();
+      if (newText === "" || newText === task.text) {
+        render(); 
+        return;
+      }
+      editTask(id, newText);
+    };
 
   editInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") saveEdit();
-    if (e.key === "Escape") render();
-  });
+      if (e.key === "Enter") {
+        editInput.removeEventListener("blur", saveEdit);
+        saveEdit();
+      }
+      if (e.key === "Escape") render();
+    });
 
-  editInput.addEventListener("blur", saveEdit);
+    editInput.addEventListener("blur", saveEdit);
+    return; 
+  }
+
+  if (event.target.classList.contains("task-checkbox")) {
+    return;
+  }
+
+  const checkbox = item.querySelector(".task-checkbox");
+  if (checkbox) {
+    setTaskDone(id, !checkbox.checked);
+  }
 });
 
 document.getElementById("all").addEventListener("click", () => setFilter("all"));

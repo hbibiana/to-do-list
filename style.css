@@ -1,26 +1,33 @@
 body {
-    background: url(img/background-optimized.webp) no-repeat center center ;
+    background:url(img/background-optimized.webp) no-repeat center center ;
     background-size:cover;
     background-attachment: fixed;
     min-height: 100vh;
     text-align: center;
-    font-family: "Playfair Display", serif;
 }
 
 /*----------HEADER----------*/
+
 header {
     text-align: right;
 }
 
-.lang {
+.langBtn {
     background-color:rgba(255, 255, 255, 0.616);
-    color:rgba(57, 43, 24, 0.937);
+    color:black;
+    border-color: rgba(161, 130, 98, 0.781);
+}
+
+.langBtn:hover {
+    opacity: 0.75;
+    transition: opacity 0.2s;
+    background-color: rgb(255, 255, 255);
 }
 
 /*----------MAIN----------*/
 
 h1 {
-    font-size: 60px;
+    font-size: clamp(40px,5vw,60px);
     color:white;
 }
 
@@ -28,42 +35,134 @@ form {
     padding-bottom: 20px;
 }
 
-input {
-    padding:10px;
-    font-family: "Playfair Display", serif;
+.input-task {
+    padding: 11px;
     border-radius: 4px;
     border: 1px solid rgba(36, 30, 19, 0.3);
+    width: clamp(200px, 80%, 400px);
+    font-size: 15px;
+    font-family: inherit;
 }
 
-input:focus {
+.input-task:focus {
+    outline: 2px solid rgba(40, 24, 57, 0.5);
+    outline-offset: 2px;
+}
+
+.langBtn,
+.addBtn,
+.filterBtn {
+    padding:10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+.addBtn {
+    background-color:rgba(36, 30, 19, 0.718);
+    border-color: rgba(36, 30, 19, 0.718); 
+    color:white;
+    max-width: 130px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.addBtn:hover {
+    opacity: 0.75;
+    transition: opacity 0.5s;
+    background-color:rgb(31, 26, 16);
+}
+
+.todolist {
+    padding-top: 5px;
+    margin-top: 10px;
+    width:100%;
+    min-height:90vh;
+    background:rgba(227, 223, 223, 0.600);
+    border-radius: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.4s;
+    transform: translateY(20px);
+    font-size: clamp(15px, 2vw, 18px);
+}
+
+.todolist.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.list-controls {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 15px 25px; 
+    min-height: 50px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.filters {
+    display: flex;
+    gap: 15px;
+}
+
+.filterBtn {
+    background: none; 
+    border: none;
+    border-bottom: 3px solid transparent; 
+    color: rgba(57, 43, 24, 0.6); 
+    font-size: 19px;
+    padding: 5px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease; 
+    border-radius: 0; 
+}
+
+.filterBtn:hover {
+    color: rgba(57, 43, 24, 1);
+    opacity: 1;
+}
+
+.filterBtn.active {
+    color: rgba(57, 43, 24, 1); 
+    border-bottom: 3px solid rgba(112, 90, 68, 1); 
+    opacity: 1;
+    font-weight: bold;
+}
+
+.font-selector-container {
+    font-size: 14px;
+    color: white; 
+}
+
+#font-select {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(192, 166, 126, 0.804);
+    border-radius: 4px;
+    padding: 3px 8px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+#font-select:focus {
     outline: 2px solid rgba(57, 43, 24, 0.5);
     outline-offset: 2px;
 }
 
-.add {
-    background-color:rgba(36, 30, 19, 0.718);
-    border-color: rgba(36, 30, 19, 0.718); 
-    color:white;
-}
-
-button {
-    padding:10px;
-    background-color:rgba(161, 130, 98, 0.781);
-    border-color: rgba(161, 130, 98, 0.781);
-    color:white;
-    border-radius: 3px;
-    font-family: "Playfair Display", serif;
-    cursor: pointer; 
-}
-
-button:hover {
-    opacity: 0.85;
-    transition: opacity 0.2s;
+.counter {
+    right: 25px;
+    font-size: 17px;
+    color: rgb(57, 43, 24);
+    margin: 0;
+    font-style: italic;
+    padding: 10px 0;
 }
 
 li button {
-    font-family: "Playfair Display", serif;
-    padding: 2px 3px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 1px 5px;
     background-color:rgba(36, 30, 19, 0.718);
     border-color: rgba(36, 30, 19, 0.718);
     color:white;
@@ -81,6 +180,7 @@ li:hover {
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 5px;
     transition: background-color 0.2s;
+    cursor: pointer;
 }
 
 li.done .task-text {
@@ -92,27 +192,62 @@ li.todo .task-text {
   color: black;
 }
 
-.todolist {
-    padding-top: 5px;
-    margin-top: 80px;
-    width:100%;
-    min-height:90vh;
-    background:rgba(192, 190, 190, 0.600);
-    border-radius: 10px;
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.4s;
-    transform: translateY(20px);
+.edit-input {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(36, 30, 19, 0.3);
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    flex-grow: 1;      
+    max-width: 400px;  
+    width: 0;          
+    margin-right: auto;
 }
 
-.todolist.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+.edit-input:focus {
+    outline: 2px solid rgba(57, 43, 24, 0.5);
+    outline-offset: 2px;
+}
+
+.edit-btn,
+.delete-btn {
+    background: none;
+    border: none;
+    color: rgba(103, 93, 93, 0.575); 
+    padding: 12px;  
+    cursor: pointer;
+    transition: color 0.3s, transform 0.2s;
+    font-size: 18px; 
+    flex-shrink: 0;
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+    flex-shrink: 0; 
+    padding: 13px;  
+    cursor: pointer;
+    color: white;
+    background-color: rgba(57, 43, 24, 0.937);
+}
+
+#task-list li {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+    padding: 5px 10px; 
+}
+
+.task-text {
+    flex-grow: 1; 
+    padding: 10px 0; 
+    margin: 0;
+    text-align: left;
+    word-break: break-word; 
 }
 
 ul {
-    padding: 0 40px;
+    padding: 0 20px;
 }
 
 input[type="checkbox"] {
@@ -122,29 +257,61 @@ input[type="checkbox"] {
     cursor:pointer;
 }
 
+/*----------FOOTER------------*/
+
+footer {
+    color: white;
+    font-size: clamp(15px, 2vw, 18px);
+}
 
 /*--------MEDIA QUERIES-------*/
+
+@media (max-width: 700px) {
+ul {
+    padding: 0;
+}
+
+li {
+    gap: 3px;
+}
+}
+
 @media (max-width: 600px) {
-    h1 {
-        font-size: 40px;
-    }
-
-    input {
-        width: 70%;
-    }
-
-    .filters {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        align-items: center;
-    }
+.input-task {
+    margin-bottom: 10px;
 }
 
-@media (max-width: 350px) {
-     input {
-        width: 70%;
-        margin-bottom: 10px;
-    }
-
+.list-controls {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
 }
+
+.filterBtn {
+    font-size: 18px; 
+    padding: 5px 20px;
+}
+
+.font-selector-container {
+    display: none;
+}
+}
+
+@media (max-width: 450px) {
+.input-task {
+    margin-bottom: 10px;
+}
+
+.todolist {
+    background:rgba(227, 223, 223, 0.792);
+}
+
+.list-controls {
+    padding: 5px 15px; 
+}
+
+.filters {
+    gap: 10px; 
+}
+}
+

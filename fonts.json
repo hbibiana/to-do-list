@@ -1,0 +1,8 @@
+[
+  { "name": "Classic (Playfair)", "family": "'Playfair Display', serif" },
+  { "name": "Handwritten (Caveat)", "family": "'Caveat', cursive" },
+  { "name": "Elegant (Dancing)", "family": "'Dancing Script', cursive" },
+  { "name": "Retro (Pacifico)", "family": "'Pacifico', cursive" },
+  { "name": "Typewriter (Mono)", "family": "'Roboto Mono', monospace" },
+  { "name": "Modern (Sans)", "family": "sans-serif" }
+]
